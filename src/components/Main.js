@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Board from './Board';
 import Rook from './Rook';
+import TurnDisplay from './TurnDisplay';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 export default function Main() {
   const [spaceArray, setSpaceArray] = useState([]);
+  const [turnDisp, setTurnDisp] = useState('White Turn')
   const rows = 8;
   const columns = 8;
-  
+
   // intitializes the board array. Sets pieces in their initial positions
   const boardInit = () => {
     let newArr = [];
@@ -18,53 +22,54 @@ export default function Main() {
       }
     }
 
-    newArr[0].splice(7, 1, <Rook black={false}/>)
-    newArr[0].splice(0, 1, <Rook black={false}/>)
-    newArr[7].splice(7, 1, <Rook black={true}/>)
-    newArr[7].splice(0, 1, <Rook black={true}/>)
+    newArr[0].splice(7, 1, <Rook black={false} />)
+    newArr[0].splice(0, 1, <Rook black={false} />)
+    newArr[7].splice(7, 1, <Rook black={true} />)
+    newArr[7].splice(0, 1, <Rook black={true} />)
     setSpaceArray(newArr);
-    console.log(newArr)
   }
 
   useEffect(() => {
     boardInit();
-  },[])
+    gameLoop();
+  }, [])
 
   useEffect(() => {
 
   }, [spaceArray])
 
-  // blackTurn = false;
-  // kingChecked = false;
+  let kingChecked = false;
+  let blackTurn = false;
+  let turn;
+  let enemy;
 
-  // gameLoop() {
-  //   while (true) {
-  //     if (!this.blackTurn) {
-  //       turn = 'white';
-  //       enemy = 'black';
-  //     } else {
-  //       turn = 'black';
-  //       enemy = 'white';
-  //     }
-  //     // print chessboard
+  const gameLoop = () => {
+    while (true) {
+      if (!blackTurn) {
+        turn = 'White';
+        enemy = 'Black';
+      } else {
+        turn = 'Black';
+        enemy = 'White';
+      }
 
-  //     if (this.kingChecked) {
-  //       // pring (`${turn} king is in check.`) // format to title case
-  //     }
-  //     // check game over checkmate
-
-
-
-  //   }
-  // }
+      setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
+      break;
+    }
+  }
 
   return (<>
-    <Container >
-      <Board
-        spaceArray={spaceArray}
-        rows={8}
-        columns={8}
-      />
+    <Container fluid>
+      <Row>
+        {turnDisp}
+      </Row>
+      <Container >
+        <Board
+          spaceArray={spaceArray}
+          rows={8}
+          columns={8}
+        />
+      </Container>
     </Container>
   </>)
 }

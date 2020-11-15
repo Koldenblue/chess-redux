@@ -11,9 +11,21 @@
 
 .board-space {
   border:2px black solid;
-  background-color: #16ac4f;
+  background-color: #41c9d3;
   border-radius: 50px;
   margin-top: 0;
   padding: 0;
   height: 95px;
+}
+
+.turn-display {
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+body {
+  
+  background: linear-gradient(25deg, rgb(83, 198, 108) 31%, rgb(189, 145, 231)90%); 
+  background-attachment: fixed;
 }
