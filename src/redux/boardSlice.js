@@ -12,7 +12,6 @@ export const boardSlice = createSlice({
     },
     setPieceToMove: (state, action) => {
       state.pieceToMove = action.payload
-      console.log(action.payload)
     }
   }
 });

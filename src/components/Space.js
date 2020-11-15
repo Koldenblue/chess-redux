@@ -35,7 +35,6 @@ export default function Space(props) {
       let newObj = {}
       newObj.row = props.row;
       newObj.col = props.col;
-      console.log(newObj)
       dispatch(setPieceToMove(newObj))
     }
     else {

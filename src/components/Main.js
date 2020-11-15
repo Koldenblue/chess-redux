@@ -36,11 +36,9 @@ export default function Main() {
 
   const handleSelection = (row, col) => {
     console.log("handling move")
-    console.log(row)
-    console.log(col)
-    console.log(spaceArray[row][col])
+    console.log('the space you selected contains:', spaceArray[row][col])
     if (spaceArray[row][col] !== null) {
-      console.log(spaceArray[row][col].props.black)
+      console.log('black turn? ', spaceArray[row][col].props.black)
       if (spaceArray[row][col].props.black === blackTurn) {
         // check for validity. setPieceToMove back to null, if not valid
         console.log('move piece to where?')
@@ -50,24 +48,26 @@ export default function Main() {
     return false;
   }
 
+  // have to pass in piece to move from the child, since otherwise 
+  // this function with the original pieceToMove(empty object)
+  // is passed back from the child
   const pickEnd = (row, col, pieceToMove) => {
-    console.log(row)
-    console.log(pieceToMove)
-    console.log(col)
     dispatch(setPickingEnd(false));
-    let newArr = JSON.stringify(spaceArray);
-    newArr = JSON.parse(newArr);
+    // let newArr = JSON.stringify(spaceArray);
+    // newArr = JSON.parse(newArr);
     // check for move validity here
     console.log(pieceToMove)
     let startRow = pieceToMove['row'];
     let startCol = pieceToMove['col'];
+    console.log(startRow)
+    console.log(startCol)
     // get the piece in the original location, then move to end location
-    let currentPiece = newArr[startRow][startCol];
+    let currentPiece = spaceArray[startRow][startCol];
     console.log(currentPiece)
-    newArr[startRow].splice(startCol, 1, null);
-    newArr[row].splice(col, 1, currentPiece);
-    console.log(newArr)
-    // setSpaceArray(newArr);
+    spaceArray[startRow].splice(startCol, 1, null);
+    spaceArray[row].splice(col, 1, currentPiece);
+    setSpaceArray(spaceArray);
+    console.log(spaceArray)
   }
 
   useEffect(() => {
@@ -79,9 +79,9 @@ export default function Main() {
     console.log(spaceArray)
   }, [spaceArray])
 
-useEffect (() => {
-  console.log(pieceToMove)
-}, [pieceToMove])
+// useEffect (() => {
+//   console.log(pieceToMove)
+// }, [pieceToMove])
 
   let kingChecked = false;
   let turn;
@@ -102,6 +102,7 @@ useEffect (() => {
   }
 
 
+  if (spaceArray.length > 0) {
   return (<>
     <Container fluid>
       <Row>
@@ -118,4 +119,7 @@ useEffect (() => {
       </Container>
     </Container>
   </>)
+  } else {
+    return(<></>)
+  }
 }
