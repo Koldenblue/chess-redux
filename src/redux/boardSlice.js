@@ -3,17 +3,23 @@ import { createSlice } from '@reduxjs/toolkit';
 export const boardSlice = createSlice({
   name: 'board',
   initialState: {
-    spaceArray: []
+    pickingEnd: false,
+    pieceToMove: {}
   },
   reducers: {
-    setSpaceArray: (state, action) => {
-      state.spaceArray = action.payload;
+    setPickingEnd: (state) => {
+      state.pickingEnd = !state.pickingEnd;
+    },
+    setPieceToMove: (state, action) => {
+      state.pieceToMove = action.payload
+      console.log(action.payload)
     }
   }
 });
 
-export const selectSpaceArray = state => state.board.spaceArray;
+export const selectPickingEnd = state => state.board.pickingEnd;
+export const selectPieceToMove = state => state.board.pieceToMove;
 
-export const { setSpaceArray } = boardSlice.actions
+export const { setPickingEnd, setPieceToMove } = boardSlice.actions
 
 export default boardSlice.reducer;

@@ -5,12 +5,15 @@ import Rook from './Rook';
 import TurnDisplay from './TurnDisplay';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectPieceToMove, setPickingEnd } from '../redux/boardSlice';
 
 export default function Main() {
   const [spaceArray, setSpaceArray] = useState([]);
   const [turnDisp, setTurnDisp] = useState('White Turn')
   const [blackTurn, setBlackTurn] = useState(false)
-  const [pickingEnd, setPickingEnd] = useState(false);
+  const dispatch = useDispatch();
+  let pieceToMove = useSelector(selectPieceToMove)
   const rows = 8;
   const columns = 8;
 
@@ -39,17 +42,32 @@ export default function Main() {
     if (spaceArray[row][col] !== null) {
       console.log(spaceArray[row][col].props.black)
       if (spaceArray[row][col].props.black === blackTurn) {
+        // check for validity. setPieceToMove back to null, if not valid
         console.log('move piece to where?')
-        setPickingEnd(true);
+        dispatch(setPickingEnd(true));
       }
     }
     return false;
   }
 
-  const pickEnd = (row, col) => {
+  const pickEnd = (row, col, pieceToMove) => {
     console.log(row)
+    console.log(pieceToMove)
     console.log(col)
-    setPickingEnd(false);
+    dispatch(setPickingEnd(false));
+    let newArr = JSON.stringify(spaceArray);
+    newArr = JSON.parse(newArr);
+    // check for move validity here
+    console.log(pieceToMove)
+    let startRow = pieceToMove['row'];
+    let startCol = pieceToMove['col'];
+    // get the piece in the original location, then move to end location
+    let currentPiece = newArr[startRow][startCol];
+    console.log(currentPiece)
+    newArr[startRow].splice(startCol, 1, null);
+    newArr[row].splice(col, 1, currentPiece);
+    console.log(newArr)
+    // setSpaceArray(newArr);
   }
 
   useEffect(() => {
@@ -58,10 +76,12 @@ export default function Main() {
   }, [])
 
   useEffect(() => {
-
+    console.log(spaceArray)
   }, [spaceArray])
 
-
+useEffect (() => {
+  console.log(pieceToMove)
+}, [pieceToMove])
 
   let kingChecked = false;
   let turn;
@@ -93,7 +113,7 @@ export default function Main() {
           rows={8}
           columns={8}
           handleSelection={handleSelection}
-          pickingEnd={pickingEnd}
+          pickEnd={pickEnd}
         />
       </Container>
     </Container>

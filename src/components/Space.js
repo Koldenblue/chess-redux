@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react"
-import { Animated } from "react-animated-css";
-const util = require("util")
+import { useSelector, useDispatch } from 'react-redux';
+import { setPieceToMove, setPickingEnd, selectPickingEnd, selectPieceToMove } from '../redux/boardSlice';
 
 export default function Space(props) {
   const spaceRef = React.createRef();
+  const dispatch = useDispatch();
+  let pickingEnd = useSelector(selectPickingEnd);
+  let pieceToMove = useSelector(selectPieceToMove);
 
   let styles = {
     boardColumn: {
@@ -27,14 +30,19 @@ export default function Space(props) {
 
   const pickUpPiece = () => {
     // if a starting piece has been picked, allow end location pick
-    if (!props.pickingEnd) {
+    if (!pickingEnd) {
       props.handleSelection(props.row, props.col);
+      let newObj = {}
+      newObj.row = props.row;
+      newObj.col = props.col;
+      console.log(newObj)
+      dispatch(setPieceToMove(newObj))
     }
     else {
       // make deep copy by value, rather than reference
       let newArr = JSON.stringify(props.spaceArray);
       newArr = JSON.parse(newArr);
-      props.pickEnd(props.row, props.col)
+      props.pickEnd(props.row, props.col, pieceToMove)
     }
   }
 

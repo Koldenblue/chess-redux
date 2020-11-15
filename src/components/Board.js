@@ -42,7 +42,6 @@ export default function Board(props) {
                 spaceColor={spaceColor}
                 piece={props.spaceArray[row][col]}
                 handleSelection={props.handleSelection}
-                pickingEnd={props.pickingEnd}
                 spaceArray={props.spaceArray}
                 pickEnd={props.pickEnd}
               />
