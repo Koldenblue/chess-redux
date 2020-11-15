@@ -4,40 +4,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export default function Board(props) {
-  const [boardLayout, setBoardLayout] = useState();
   const [mappedSpaces, setMappedSpaces] = useState();
 
-  let styles = {
-    boardRow: {
-      'height': '100px',
-      'marginTop': '0',
-      'padding': '0',
-      'position': 'relative',
-      left: '50%',
-      'transform': 'translateX(-50%)',
-
-    }
-  }
-
-  let rowArr = new Array(props.rows);
-  let colArr = new Array(props.columns);
-
-  // creating new arrays the size of rows and columns, so that they can be mapped to Spaces below
-  const populateColArr = () => {
-    for (let c = 0, j = colArr.length; c < j; c++) {
-      colArr[c] = c;
-    }
-  }
-  const populateRowArr = () => {
-    for (let r = 0, j = rowArr.length; r < j; r++) {
-      rowArr[r] = r;
-    }
-  }
-
-  //
+  // maps out the array of pieces into Space components and piece components for visualization
   useEffect(() => {
     let col = -1;
     let row = 8;
+    let spaceColor = 'white'
     setMappedSpaces(props.spaceArray.map(r => {
       if (spaceColor === 'black') {
         spaceColor = 'white'
@@ -46,7 +19,7 @@ export default function Board(props) {
       }
       row--;
       return (
-        <div key={`row-${row}`} className='row' style={styles.boardRow}>
+        <div key={`row-${row}`} className='row board-row'>
           <Col></Col>
           {props.spaceArray[row].map(c => {
             if (spaceColor === 'black') {
@@ -67,6 +40,7 @@ export default function Board(props) {
                   visible={true}
                   spaceColor={spaceColor}
                   piece={props.spaceArray[row][col]}
+                  handleMove={props.handleMove}
                 />
             </>)
           })}
@@ -75,43 +49,6 @@ export default function Board(props) {
       )
     }))
   }, [props.spaceArray])
-
-  let spaceColor = 'black';
-  useEffect(() => {
-    populateColArr();
-    populateRowArr();
-    setBoardLayout(rowArr.map(r => {
-      if (spaceColor === 'black') {
-        spaceColor = 'white'
-      } else {
-        spaceColor = 'black'
-      }
-      return (
-        <div key={`row-${r}`} className='row' style={styles.boardRow}>
-          <Col></Col>
-          {colArr.map(c => {
-            if (spaceColor === 'black') {
-              spaceColor = 'white'
-            } else {
-              spaceColor = 'black'
-            }
-            return (<>
-                <Space
-                  id={`row-${r}-col-${c}`}
-                  col={c}
-                  row={r}
-                  key={`row-${r}-col-${c}`}
-                  visible={true}
-                  spaceColor={spaceColor}
-                />
-            </>)
-          })}
-          <Col></Col>
-        </div>
-      )
-    }))
-  }, [])
-
 
   return (<>
     {mappedSpaces}

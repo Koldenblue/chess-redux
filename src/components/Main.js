@@ -58,6 +58,12 @@ export default function Main() {
     }
   }
 
+  const handleMove = (row, col) => {
+    console.log("handling move")
+    console.log(row)
+    console.log(col)
+  }
+
   return (<>
     <Container fluid>
       <Row>
@@ -68,6 +74,7 @@ export default function Main() {
           spaceArray={spaceArray}
           rows={8}
           columns={8}
+          handleMove={handleMove}
         />
       </Container>
     </Container>

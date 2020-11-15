@@ -9,6 +9,15 @@
   transform: translate3d(-50%, -50%, 0);
 }
 
+.board-row {
+  height: 100px;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .board-space {
   border:2px black solid;
   background-color: #41c9d3;

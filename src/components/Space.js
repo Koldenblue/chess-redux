@@ -29,6 +29,7 @@ export default function Space(props) {
         id={props.id}
         col={props.col}
         row={props.row}
+        onClick={() => props.handleMove(props.row, props.col)}
       >
         {props.piece}
       </div>
