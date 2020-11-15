@@ -13,7 +13,7 @@ export default function Main() {
   const [turnDisp, setTurnDisp] = useState('White Turn')
   const [blackTurn, setBlackTurn] = useState(false)
   const dispatch = useDispatch();
-  let pieceToMove = useSelector(selectPieceToMove)
+  const [board, setBoard] = useState();
   const rows = 8;
   const columns = 8;
 
@@ -53,20 +53,17 @@ export default function Main() {
   // is passed back from the child
   const pickEnd = (row, col, pieceToMove) => {
     dispatch(setPickingEnd(false));
-    // let newArr = JSON.stringify(spaceArray);
-    // newArr = JSON.parse(newArr);
+    let newArr = spaceArray.map((x) => {
+      return x;
+    })
     // check for move validity here
-    console.log(pieceToMove)
     let startRow = pieceToMove['row'];
     let startCol = pieceToMove['col'];
-    console.log(startRow)
-    console.log(startCol)
     // get the piece in the original location, then move to end location
     let currentPiece = spaceArray[startRow][startCol];
-    console.log(currentPiece)
-    spaceArray[startRow].splice(startCol, 1, null);
-    spaceArray[row].splice(col, 1, currentPiece);
-    setSpaceArray(spaceArray);
+    newArr[startRow].splice(startCol, 1, null);
+    newArr[row].splice(col, 1, currentPiece);
+    setSpaceArray(newArr);
     console.log(spaceArray)
   }
 
@@ -76,12 +73,22 @@ export default function Main() {
   }, [])
 
   useEffect(() => {
-    console.log(spaceArray)
+    console.log("changing space Array")
+    // set board so that it updates when space array updates
+    setBoard(
+      <Board
+        spaceArray={spaceArray}
+        rows={8}
+        columns={8}
+        handleSelection={handleSelection}
+        pickEnd={pickEnd}
+      />
+    )
   }, [spaceArray])
 
-// useEffect (() => {
-//   console.log(pieceToMove)
-// }, [pieceToMove])
+  // useEffect (() => {
+  //   console.log(pieceToMove)
+  // }, [pieceToMove])
 
   let kingChecked = false;
   let turn;
@@ -103,23 +110,17 @@ export default function Main() {
 
 
   if (spaceArray.length > 0) {
-  return (<>
-    <Container fluid>
-      <Row>
-        {turnDisp}
-      </Row>
-      <Container >
-        <Board
-          spaceArray={spaceArray}
-          rows={8}
-          columns={8}
-          handleSelection={handleSelection}
-          pickEnd={pickEnd}
-        />
+    return (<>
+      <Container fluid>
+        <Row>
+          {turnDisp}
+        </Row>
+        <Container >
+          {board}
+        </Container>
       </Container>
-    </Container>
-  </>)
+    </>)
   } else {
-    return(<></>)
+    return (<></>)
   }
 }
