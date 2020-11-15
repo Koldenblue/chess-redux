@@ -34,16 +34,17 @@ export default function Board(props) {
     }
   }
 
+  //
   useEffect(() => {
     let col = -1;
-    let row = -1;
+    let row = 8;
     setMappedSpaces(props.spaceArray.map(r => {
       if (spaceColor === 'black') {
         spaceColor = 'white'
       } else {
         spaceColor = 'black'
       }
-      row++;
+      row--;
       return (
         <div key={`row-${row}`} className='row' style={styles.boardRow}>
           <Col></Col>
@@ -54,6 +55,9 @@ export default function Board(props) {
               spaceColor = 'black'
             }
             col++;
+            if (col > 7) {
+              col = 0;
+            }
             return (<>
                 <Space
                   id={`row-${row}-col-${col}`}

@@ -8,3 +8,12 @@
   top: 45%;
   transform: translate3d(-50%, -50%, 0);
 }
+
+.board-space {
+  border:2px black solid;
+  background-color: #16ac4f;
+  border-radius: 50px;
+  margin-top: 0;
+  padding: 0;
+  height: 95px;
+}

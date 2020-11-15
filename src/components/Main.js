@@ -8,6 +8,7 @@ export default function Main() {
   const rows = 8;
   const columns = 8;
   
+  // intitializes the board array. Sets pieces in their initial positions
   const boardInit = () => {
     let newArr = [];
     for (let i = 0; i < rows; i++) {
@@ -17,19 +18,22 @@ export default function Main() {
       }
     }
 
-    newArr[0].splice(7, 1, <Rook />)
+    newArr[0].splice(7, 1, <Rook black={false}/>)
+    newArr[0].splice(0, 1, <Rook black={false}/>)
+    newArr[7].splice(7, 1, <Rook black={true}/>)
+    newArr[7].splice(0, 1, <Rook black={true}/>)
     setSpaceArray(newArr);
     console.log(newArr)
   }
 
   useEffect(() => {
     boardInit();
-    console.log(spaceArray)
   },[])
 
   useEffect(() => {
 
   }, [spaceArray])
+
   // blackTurn = false;
   // kingChecked = false;
 
