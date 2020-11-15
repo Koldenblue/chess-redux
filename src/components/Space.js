@@ -1,5 +1,4 @@
 import React from "react"
-import "../styles/space.css"
 import { Animated } from "react-animated-css";
 const util = require("util")
 
@@ -32,24 +31,22 @@ class Space extends React.Component {
 
   asyncState = util.promisify(this.setState);
 
-  changeColor = () => {
-    (this.props.findLowestFreeSpace(this.styles.boardSpace["backgroundColor"], this.props.col, this.props.row))
-  }
+  // changeColor = () => {
+  //   (this.props.findLowestFreeSpace(this.styles.boardSpace["backgroundColor"], this.props.col, this.props.row))
+  // }
 
   render() {
-    console.log(this.props.id)
-    return (
-      <Animated animationIn={this.state.animationIn} isVisible={this.props.visible} className='col-sm-1' style={this.styles.boardColumn}>
-        <div className='col-sm-12 board-space'
+    return (<>
+      {/* <Animated animationIn={this.state.animationIn} isVisible={this.props.visible}  style={this.styles.boardColumn}> */}
+        <div className='col-sm-1 board-space'
           id={this.props.id}
           style={this.styles.boardSpace}
-          onClick={this.changeColor}
           col={this.props.col}
           row={this.props.row}
         >
         </div>
-      </Animated >
-    )
+      {/* </Animated > */}
+    </>)
   }
 }
 
