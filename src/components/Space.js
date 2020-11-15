@@ -1,19 +1,13 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { Animated } from "react-animated-css";
 const util = require("util")
 
-class Space extends React.Component {
-  constructor(props) {
-    super(props)
+export default function Space(props) {
 
-    this.state = {
-      animationIn: "rotateIn",
-    }
-  }
-
-  styles = {
+  let styles = {
     boardColumn: {
-      'backgroundImage': 'linear-gradient(to bottom left, #FCC85F, #F3752B)',
+      // 'backgroundImage': 'linear-gradient(to bottom left, #FCC85F, #F3752B)',
+      backgroundColor: props.spaceColor,
       'border': '2px black solid',
       'marginTop': 0,
       'padding': 0,
@@ -29,25 +23,15 @@ class Space extends React.Component {
     }
   }
 
-  asyncState = util.promisify(this.setState);
-
-  // changeColor = () => {
-  //   (this.props.findLowestFreeSpace(this.styles.boardSpace["backgroundColor"], this.props.col, this.props.row))
-  // }
-
-  render() {
-    return (<>
-      {/* <Animated animationIn={this.state.animationIn} isVisible={this.props.visible}  style={this.styles.boardColumn}> */}
-        <div className='col-sm-1 board-space'
-          id={this.props.id}
-          style={this.styles.boardSpace}
-          col={this.props.col}
-          row={this.props.row}
-        >
-        </div>
-      {/* </Animated > */}
-    </>)
-  }
+  return (<>
+    <div className='col-sm-1' style={styles.boardColumn}>
+      <div className='col-sm-12 board-space'
+        id={props.id}
+        style={styles.boardSpace}
+        col={props.col}
+        row={props.row}
+      >
+      </div>
+    </div >
+  </>)
 }
-
-export default Space;

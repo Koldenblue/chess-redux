@@ -12,7 +12,9 @@ export default function Board(props) {
       'marginTop': '0',
       'padding': '0',
       'position': 'relative',
-      // 'right': '50px',
+      left: '50%',
+      'transform': 'translateX(-50%)',
+
     }
   }
 
@@ -31,14 +33,27 @@ export default function Board(props) {
     }
   }
 
+  let spaceColor = 'black';
   useEffect(() => {
     populateColArr();
     populateRowArr();
     console.log(rowArr)
     setBoardLayout(rowArr.map(r => {
+      if (spaceColor === 'black') {
+        spaceColor = 'white'
+      } else {
+        spaceColor = 'black'
+      }
       return (
         <div key={`row-${r}`} className='row' style={styles.boardRow}>
+          <Col></Col>
           {colArr.map(c => {
+            if (spaceColor === 'black') {
+              spaceColor = 'white'
+            } else {
+              spaceColor = 'black'
+            }
+            console.log(spaceColor)
             return (<>
                 <Space
                   id={`row-${r}-col-${c}`}
@@ -46,9 +61,11 @@ export default function Board(props) {
                   row={r}
                   key={`row-${r}-col-${c}`}
                   visible={true}
+                  spaceColor={spaceColor}
                 />
             </>)
           })}
+          <Col></Col>
         </div>
       )
     }))
