@@ -1,15 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Board from './Board';
+import Rook from './Rook';
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props)
+export default function Main() {
+  const [spaceArray, setSpaceArray] = useState([]);
+  const rows = 8;
+  const columns = 8;
+  
+  const boardInit = () => {
+    let newArr = [];
+    for (let i = 0; i < rows; i++) {
+      newArr.push([])
+      for (let j = 0; j < columns; j++) {
+        newArr[i].push(null)
+      }
+    }
 
+    newArr[0].splice(7, 1, <Rook />)
+    setSpaceArray(newArr);
+    console.log(newArr)
   }
 
-  blackTurn = false;
-  kingChecked = false;
+  useEffect(() => {
+    boardInit();
+    console.log(spaceArray)
+  },[])
+
+  useEffect(() => {
+
+  }, [spaceArray])
+  // blackTurn = false;
+  // kingChecked = false;
 
   // gameLoop() {
   //   while (true) {
@@ -32,16 +54,13 @@ class Main extends React.Component {
   //   }
   // }
 
-  render() {
-    return (<>
-      <Container >
-        <Board
-          rows={8}
-          columns={8}
-        />
-      </Container>
-    </>)
-  }
+  return (<>
+    <Container >
+      <Board
+        spaceArray={spaceArray}
+        rows={8}
+        columns={8}
+      />
+    </Container>
+  </>)
 }
-
-export default Main;

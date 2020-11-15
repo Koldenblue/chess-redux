@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 
 export default function Board(props) {
   const [boardLayout, setBoardLayout] = useState();
+  const [mappedSpaces, setMappedSpaces] = useState();
 
   let styles = {
     boardRow: {
@@ -33,11 +34,48 @@ export default function Board(props) {
     }
   }
 
+  useEffect(() => {
+    let col = -1;
+    let row = -1;
+    setMappedSpaces(props.spaceArray.map(r => {
+      if (spaceColor === 'black') {
+        spaceColor = 'white'
+      } else {
+        spaceColor = 'black'
+      }
+      row++;
+      return (
+        <div key={`row-${row}`} className='row' style={styles.boardRow}>
+          <Col></Col>
+          {props.spaceArray[row].map(c => {
+            if (spaceColor === 'black') {
+              spaceColor = 'white'
+            } else {
+              spaceColor = 'black'
+            }
+            col++;
+            return (<>
+                <Space
+                  id={`row-${row}-col-${col}`}
+                  col={col}
+                  row={row}
+                  key={`row-${row}-col-${col}`}
+                  visible={true}
+                  spaceColor={spaceColor}
+                  piece={props.spaceArray[row][col]}
+                />
+            </>)
+          })}
+          <Col></Col>
+        </div>
+      )
+    }))
+  }, [props.spaceArray])
+
   let spaceColor = 'black';
   useEffect(() => {
     populateColArr();
     populateRowArr();
-    console.log(rowArr)
     setBoardLayout(rowArr.map(r => {
       if (spaceColor === 'black') {
         spaceColor = 'white'
@@ -53,7 +91,6 @@ export default function Board(props) {
             } else {
               spaceColor = 'black'
             }
-            console.log(spaceColor)
             return (<>
                 <Space
                   id={`row-${r}-col-${c}`}
@@ -73,6 +110,6 @@ export default function Board(props) {
 
 
   return (<>
-    {boardLayout}
+    {mappedSpaces}
   </>)
 }

@@ -31,6 +31,7 @@ export default function Space(props) {
         col={props.col}
         row={props.row}
       >
+        {props.piece}
       </div>
     </div >
   </>)
