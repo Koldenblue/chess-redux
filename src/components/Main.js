@@ -9,6 +9,8 @@ import Col from 'react-bootstrap/Col';
 export default function Main() {
   const [spaceArray, setSpaceArray] = useState([]);
   const [turnDisp, setTurnDisp] = useState('White Turn')
+  const [blackTurn, setBlackTurn] = useState(false)
+  const [pickingEnd, setPickingEnd] = useState(false);
   const rows = 8;
   const columns = 8;
 
@@ -29,6 +31,27 @@ export default function Main() {
     setSpaceArray(newArr);
   }
 
+  const handleSelection = (row, col) => {
+    console.log("handling move")
+    console.log(row)
+    console.log(col)
+    console.log(spaceArray[row][col])
+    if (spaceArray[row][col] !== null) {
+      console.log(spaceArray[row][col].props.black)
+      if (spaceArray[row][col].props.black === blackTurn) {
+        console.log('move piece to where?')
+        setPickingEnd(true);
+      }
+    }
+    return false;
+  }
+
+  const pickEnd = (row, col) => {
+    console.log(row)
+    console.log(col)
+    setPickingEnd(false);
+  }
+
   useEffect(() => {
     boardInit();
     gameLoop();
@@ -38,11 +61,11 @@ export default function Main() {
 
   }, [spaceArray])
 
+
+
   let kingChecked = false;
-  let blackTurn = false;
   let turn;
   let enemy;
-
   const gameLoop = () => {
     while (true) {
       if (!blackTurn) {
@@ -58,11 +81,6 @@ export default function Main() {
     }
   }
 
-  const handleMove = (row, col) => {
-    console.log("handling move")
-    console.log(row)
-    console.log(col)
-  }
 
   return (<>
     <Container fluid>
@@ -74,7 +92,8 @@ export default function Main() {
           spaceArray={spaceArray}
           rows={8}
           columns={8}
-          handleMove={handleMove}
+          handleSelection={handleSelection}
+          pickingEnd={pickingEnd}
         />
       </Container>
     </Container>

@@ -18,6 +18,7 @@ export default function Board(props) {
         spaceColor = 'black'
       }
       row--;
+
       return (
         <div key={`row-${row}`} className='row board-row'>
           <Col></Col>
@@ -31,18 +32,21 @@ export default function Board(props) {
             if (col > 7) {
               col = 0;
             }
-            return (<>
-                <Space
-                  id={`row-${row}-col-${col}`}
-                  col={col}
-                  row={row}
-                  key={`row-${row}-col-${col}`}
-                  visible={true}
-                  spaceColor={spaceColor}
-                  piece={props.spaceArray[row][col]}
-                  handleMove={props.handleMove}
-                />
-            </>)
+            return (
+              <Space
+                id={`row-${row}-col-${col}`}
+                col={col}
+                row={row}
+                key={`row-${row}-col-${col}`}
+                visible={true}
+                spaceColor={spaceColor}
+                piece={props.spaceArray[row][col]}
+                handleSelection={props.handleSelection}
+                pickingEnd={props.pickingEnd}
+                spaceArray={props.spaceArray}
+                pickEnd={props.pickEnd}
+              />
+            )
           })}
           <Col></Col>
         </div>

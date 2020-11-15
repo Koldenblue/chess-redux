@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Animated } from "react-animated-css";
 const util = require("util")
 
 export default function Space(props) {
+  const spaceRef = React.createRef();
 
   let styles = {
     boardColumn: {
@@ -23,13 +24,28 @@ export default function Space(props) {
     // }
   }
 
+
+  const pickUpPiece = () => {
+    // if a starting piece has been picked, allow end location pick
+    if (!props.pickingEnd) {
+      props.handleSelection(props.row, props.col);
+    }
+    else {
+      // make deep copy by value, rather than reference
+      let newArr = JSON.stringify(props.spaceArray);
+      newArr = JSON.parse(newArr);
+      props.pickEnd(props.row, props.col)
+    }
+  }
+
   return (<>
     <div className='col-sm-1' style={styles.boardColumn}>
       <div className='col-sm-12 board-space'
+        ref={spaceRef}
         id={props.id}
         col={props.col}
         row={props.row}
-        onClick={() => props.handleMove(props.row, props.col)}
+        onClick={pickUpPiece}
       >
         {props.piece}
       </div>

@@ -38,3 +38,8 @@ body {
   background: linear-gradient(25deg, rgb(83, 198, 108) 31%, rgb(189, 145, 231)90%); 
   background-attachment: fixed;
 }
+
+.moving-piece {
+  position: relative;
+  z-index: 9999;
+}
