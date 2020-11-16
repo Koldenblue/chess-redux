@@ -4,7 +4,7 @@ import Board from './Board';
 import Rook from './Rook';
 import TurnDisplay from './TurnDisplay';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import RookMovement from './movement/RookMovement';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPieceToMove, setPickingEnd } from '../redux/boardSlice';
 
@@ -53,33 +53,40 @@ export default function Main() {
   // this function with the original pieceToMove(empty object)
   // is passed back from the child
   const pickEnd = (row, col, pieceToMove) => {
+    let startRow = pieceToMove['row'];
+    let startCol = pieceToMove['col'];
+
+    // check for move validity here
+    let currentPiece = spaceArray[startRow][startCol];
+    console.log(currentPiece)
+    console.log(currentPiece.type.name)
     dispatch(setPickingEnd(false));
     let newArr = spaceArray.map((x) => {
       return x;
     })
-    // check for move validity here
-    let startRow = pieceToMove['row'];
-    let startCol = pieceToMove['col'];
     // get the piece in the original location, then move to end location
-    let currentPiece = spaceArray[startRow][startCol];
     newArr[startRow].splice(startCol, 1, null);
     newArr[row].splice(col, 1, currentPiece);
     setSpaceArray(newArr);
     console.log(spaceArray)
 
     // set to next player's turn.
-    if (!blackTurn) {
-      setTurn('Black');
+    if (turn === 'White') {
+      setTurnDisp(<TurnDisplay>{`Black turn`}</TurnDisplay>);
+      setTurn('Black')
     } else {
+      setTurnDisp(<TurnDisplay>{`White turn`}</TurnDisplay>);
       setTurn('White')
     }
     setBlackTurn(!blackTurn)
-    setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
   }
+
 
   // initialize board to start a new game
   useEffect(() => {
     boardInit();
+    setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
+
   }, [])
 
   useEffect(() => {
@@ -95,6 +102,7 @@ export default function Main() {
       />
     )
   }, [spaceArray])
+
 
   if (spaceArray.length > 0) {
     return (<>
