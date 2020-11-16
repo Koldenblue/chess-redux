@@ -14,6 +14,7 @@ export default function Main() {
   const [blackTurn, setBlackTurn] = useState(false)
   const dispatch = useDispatch();
   const [board, setBoard] = useState();
+  const [turn, setTurn] = useState('White')
   const rows = 8;
   const columns = 8;
 
@@ -65,11 +66,20 @@ export default function Main() {
     newArr[row].splice(col, 1, currentPiece);
     setSpaceArray(newArr);
     console.log(spaceArray)
+
+    // set to next player's turn.
+    if (!blackTurn) {
+      setTurn('Black');
+    } else {
+      setTurn('White')
+    }
+    setBlackTurn(!blackTurn)
+    setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
   }
 
+  // initialize board to start a new game
   useEffect(() => {
     boardInit();
-    gameLoop();
   }, [])
 
   useEffect(() => {
@@ -85,29 +95,6 @@ export default function Main() {
       />
     )
   }, [spaceArray])
-
-  // useEffect (() => {
-  //   console.log(pieceToMove)
-  // }, [pieceToMove])
-
-  let kingChecked = false;
-  let turn;
-  let enemy;
-  const gameLoop = () => {
-    while (true) {
-      if (!blackTurn) {
-        turn = 'White';
-        enemy = 'Black';
-      } else {
-        turn = 'Black';
-        enemy = 'White';
-      }
-
-      setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
-      break;
-    }
-  }
-
 
   if (spaceArray.length > 0) {
     return (<>
