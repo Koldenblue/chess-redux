@@ -142,7 +142,7 @@ export default function Main() {
       setAlertOpacity(1);
       setAlertMessage('Invalid Movement! Select another piece to move.');
       dispatch(setPickingEnd(false));
-      dispatch(setPieceToMove({}))
+      dispatch(setPieceToMove({}));
     }
   }
 
@@ -150,8 +150,7 @@ export default function Main() {
   // initialize board to start a new game
   useEffect(() => {
     boardInit();
-    setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>)
-
+    setTurnDisp(<TurnDisplay>{`${turn} turn`}</TurnDisplay>);
   }, [])
 
   useEffect(() => {
