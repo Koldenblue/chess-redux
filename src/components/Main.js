@@ -56,6 +56,7 @@ export default function Main() {
     let startRow = pieceToMove['row'];
     let startCol = pieceToMove['col'];
 
+    console.log(RookMovement(startCol, startRow, col, row, spaceArray))
     // check for move validity here
     let currentPiece = spaceArray[startRow][startCol];
     console.log(currentPiece)

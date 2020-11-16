@@ -16,17 +16,8 @@ export default function Space(props) {
       'marginTop': 0,
       'padding': 0,
       'borderRadius': '8px',
-    },
-    // boardSpace: {
-    //   'border': '2px black solid',
-    //   'backgroundColor': '#FFE7AD',
-    //   'borderRadius': '50px',
-    //   'marginTop': 0,
-    //   'padding': 0,
-    //   'height': '95px',
-    // }
+    }
   }
-
 
   const pickUpPiece = () => {
     // if a starting piece has been picked, allow end location pick

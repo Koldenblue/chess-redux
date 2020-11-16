@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Space from './Space';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 export default function Board(props) {
@@ -12,6 +11,7 @@ export default function Board(props) {
     let row = 8;
     let spaceColor = 'white'
     setMappedSpaces(props.spaceArray.map(r => {
+      // alternate black and white spaces
       if (spaceColor === 'black') {
         spaceColor = 'white'
       } else {
