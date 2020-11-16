@@ -2,9 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Board from './Board';
 import Rook from './Rook';
+import King from './King';
+import Queen from './Queen';
+import Bishop from './Bishop';
+import Pawn from './Pawn';
+import Knight from './Knight';
 import TurnDisplay from './TurnDisplay';
 import Row from 'react-bootstrap/Row';
 import RookMovement from './movement/RookMovement';
+import PawnMovement from './movement/PawnMovement';
+import QueenMovement from './movement/QueenMovement';
+import KingMovement from './movement/KingMovement';
+import KnightMovement from './movement/KnightMovement';
+import BishopMovement from './movement/BishopMovement';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPickingEnd, selectPieceToMove, setPickingEnd, setPieceToMove } from '../redux/boardSlice';
 import MovementAlert from './MovementAlert';
@@ -32,10 +42,28 @@ export default function Main() {
       }
     }
 
+    // select a row from new array, then splice the appropriate piece into the target column
     newArr[0].splice(7, 1, <Rook black={false} />)
     newArr[0].splice(0, 1, <Rook black={false} />)
     newArr[7].splice(7, 1, <Rook black={true} />)
     newArr[7].splice(0, 1, <Rook black={true} />)
+    newArr[7].splice(2, 1, <Bishop black={true} />)
+    newArr[7].splice(5, 1, <Bishop black={true} />)
+    newArr[0].splice(2, 1, <Bishop black={false} />)
+    newArr[0].splice(5, 1, <Bishop black={false} />)
+    newArr[7].splice(4, 1, <King black={true} />)
+    newArr[0].splice(4, 1, <King black={false} />)
+    newArr[7].splice(3, 1, <Queen black={true} />)
+    newArr[0].splice(3, 1, <Queen black={false} />)
+    newArr[7].splice(1, 1, <Knight black={true} />)
+    newArr[7].splice(6, 1, <Knight black={true} />)
+    newArr[0].splice(1, 1, <Knight black={false} />)
+    newArr[0].splice(6, 1, <Knight black={false} />)
+
+    for (let i = 0; i < columns; i++) {
+      newArr[1].splice(i, 1, <Pawn black={false} />)
+      newArr[6].splice(i, 1, <Pawn black={true} />)
+    }
     setSpaceArray(newArr);
   }
 
@@ -63,10 +91,24 @@ export default function Main() {
 
     let validMove = false;
     // get the name of the current piece, and run the appropriate movement function
-    switch(currentPiece.type.name) {
+    switch (currentPiece.type.name) {
       case 'Rook':
         validMove = (RookMovement(startCol, startRow, col, row, spaceArray))
-        console.log(validMove)
+        break;
+      case 'Pawn':
+        validMove = (PawnMovement(startCol, startRow, col, row, spaceArray))
+        break;
+      case 'Bishop':
+        validMove = (BishopMovement(startCol, startRow, col, row, spaceArray))
+        break;
+      case 'King':
+        validMove = (KingMovement(startCol, startRow, col, row, spaceArray))
+        break;
+      case 'Queen':
+        validMove = (QueenMovement(startCol, startRow, col, row, spaceArray))
+        break;
+      case 'Knight':
+        validMove = (KnightMovement(startCol, startRow, col, row, spaceArray))
         break;
       default:
         break;
