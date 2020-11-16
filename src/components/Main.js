@@ -55,31 +55,44 @@ export default function Main() {
   const pickEnd = (row, col, pieceToMove) => {
     let startRow = pieceToMove['row'];
     let startCol = pieceToMove['col'];
-
-    console.log(RookMovement(startCol, startRow, col, row, spaceArray))
-    // check for move validity here
     let currentPiece = spaceArray[startRow][startCol];
-    console.log(currentPiece)
-    console.log(currentPiece.type.name)
-    dispatch(setPickingEnd(false));
-    let newArr = spaceArray.map((x) => {
-      return x;
-    })
-    // get the piece in the original location, then move to end location
-    newArr[startRow].splice(startCol, 1, null);
-    newArr[row].splice(col, 1, currentPiece);
-    setSpaceArray(newArr);
-    console.log(spaceArray)
 
-    // set to next player's turn.
-    if (turn === 'White') {
-      setTurnDisp(<TurnDisplay>{`Black turn`}</TurnDisplay>);
-      setTurn('Black')
-    } else {
-      setTurnDisp(<TurnDisplay>{`White turn`}</TurnDisplay>);
-      setTurn('White')
+    let validMove = false;
+    // get the name of the current piece, and run the appropriate movement function
+    switch(currentPiece.type.name) {
+      case 'Rook':
+        validMove = (RookMovement(startCol, startRow, col, row, spaceArray))
+        console.log(validMove)
+        break;
+      default:
+        break;
     }
-    setBlackTurn(!blackTurn)
+
+    if (validMove) {
+      // if valid, no longer picking an end location
+      dispatch(setPickingEnd(false));
+      let newArr = spaceArray.map((x) => {
+        return x;
+      })
+      // get the piece in the original location, then move to end location
+      newArr[startRow].splice(startCol, 1, null);
+      newArr[row].splice(col, 1, currentPiece);
+      setSpaceArray(newArr);
+
+      // set to next player's turn.
+      if (turn === 'White') {
+        setTurnDisp(<TurnDisplay>{`Black turn`}</TurnDisplay>);
+        setTurn('Black')
+      } else {
+        setTurnDisp(<TurnDisplay>{`White turn`}</TurnDisplay>);
+        setTurn('White')
+      }
+      setBlackTurn(!blackTurn)
+    }
+
+    else {
+      // handle non-valid move here
+    }
   }
 
 
@@ -91,7 +104,6 @@ export default function Main() {
   }, [])
 
   useEffect(() => {
-    console.log("changing space Array")
     // set board so that it updates when space array updates
     setBoard(
       <Board
