@@ -6,7 +6,8 @@ import TurnDisplay from './TurnDisplay';
 import Row from 'react-bootstrap/Row';
 import RookMovement from './movement/RookMovement';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPieceToMove, setPickingEnd } from '../redux/boardSlice';
+import { selectPickingEnd, selectPieceToMove, setPickingEnd, setPieceToMove } from '../redux/boardSlice';
+import MovementAlert from './MovementAlert';
 
 export default function Main() {
   const [spaceArray, setSpaceArray] = useState([]);
@@ -15,6 +16,9 @@ export default function Main() {
   const dispatch = useDispatch();
   const [board, setBoard] = useState();
   const [turn, setTurn] = useState('White')
+  const [alertOpacity, setAlertOpacity] = useState(0);
+  const [alertMessage, setAlertMessage] = useState('');
+  let pickingEnd = useSelector(selectPickingEnd);
   const rows = 8;
   const columns = 8;
 
@@ -92,6 +96,11 @@ export default function Main() {
 
     else {
       // handle non-valid move here
+      console.log('nonvalid')
+      setAlertOpacity(1);
+      setAlertMessage('Invalid Movement! Select another piece to move.');
+      dispatch(setPickingEnd(false));
+      dispatch(setPieceToMove({}))
     }
   }
 
@@ -122,6 +131,12 @@ export default function Main() {
       <Container fluid>
         <Row>
           {turnDisp}
+          <MovementAlert
+            alertOpacity={alertOpacity}
+            setAlertOpacity={setAlertOpacity}
+          >
+            {alertMessage}
+          </MovementAlert>
         </Row>
         <Container >
           {board}

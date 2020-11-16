@@ -22,6 +22,7 @@ export default function Space(props) {
   const pickUpPiece = () => {
     // if a starting piece has been picked, allow end location pick
     if (!pickingEnd) {
+      console.log('picking end is false')
       props.handleSelection(props.row, props.col);
       let newObj = {}
       newObj.row = props.row;
