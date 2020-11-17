@@ -20,7 +20,6 @@ export default function BishopMovement(startColumn, startRow, endColumn, endRow,
       // console.log('c', c)
       // console.log('r', r)
       if (boardArray[r][c] !== null) {
-        console.log('false here')
         return validEndCheck;
       }
     }
