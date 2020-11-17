@@ -1,6 +1,6 @@
 # react-chess
-The deployed app can be viewed <a target=_blank href=https://chess-redux.herokuapp.com>here</a>.
-This app is partially based on a translation from Python code (also written by me), which can be found at <a target=_blank href=https://github.com/Koldenblue/python-chess-game>this GitHub repository</a>.
+The deployed app can be viewed <a target='_blank' href=https://chess-redux.herokuapp.com>here</a>.
+This app is partially based on a translation from Python code (also written by me), which can be found at <a target='_blank' href=https://github.com/Koldenblue/python-chess-game>this GitHub repository</a>.
 
 Work in progress. Game logic is partially written. This app uses React components to present the front end. A Redux store is used to provide a global state to components.
 
