@@ -34,6 +34,6 @@ export default function BishopMovement(startColumn, startRow, endColumn, endRow,
     return validEndCheck;
   } catch (err) {
     console.log(err)
-    return err;
+    return false;
   }
 }

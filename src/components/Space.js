@@ -7,6 +7,7 @@ export default function Space(props) {
   const dispatch = useDispatch();
   let pickingEnd = useSelector(selectPickingEnd);
   let pieceToMove = useSelector(selectPieceToMove);
+  const [opacity, setOpacity] = useState(0);
 
   let styles = {
     boardColumn: {
@@ -16,6 +17,9 @@ export default function Space(props) {
       'marginTop': 0,
       'padding': 0,
       'borderRadius': '8px',
+    },
+    visible: {
+      opacity: opacity,
     }
   }
 
@@ -37,9 +41,18 @@ export default function Space(props) {
     }
   }
 
+  useEffect(() => {
+    if (!props.piece) {
+      setOpacity(0);
+    }
+    else {
+      setOpacity(1)
+    }
+  },[props.piece])
   return (<>
     <div className='col-sm-1' style={styles.boardColumn}>
       <div className='col-sm-12 board-space'
+        style={styles.visible}
         ref={spaceRef}
         id={props.id}
         col={props.col}

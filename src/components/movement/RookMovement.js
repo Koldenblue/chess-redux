@@ -48,6 +48,6 @@ export default function RookMovement(startColumn, startRow, endColumn, endRow, b
     return validEndCheck;
   } catch (err) {
     console.log(err)
-    return err;
+    return false;
   }
 }

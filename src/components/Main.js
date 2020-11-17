@@ -60,10 +60,10 @@ export default function Main() {
     newArr[0].splice(1, 1, <Knight black={false} />)
     newArr[0].splice(6, 1, <Knight black={false} />)
 
-    // for (let i = 0; i < columns; i++) {
-    //   newArr[1].splice(i, 1, <Pawn black={false} />)
-    //   newArr[6].splice(i, 1, <Pawn black={true} />)
-    // }
+    for (let i = 0; i < columns; i++) {
+      newArr[1].splice(i, 1, <Pawn black={false} />)
+      newArr[6].splice(i, 1, <Pawn black={true} />)
+    }
     setSpaceArray(newArr);
   }
 

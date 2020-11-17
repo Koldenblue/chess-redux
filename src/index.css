@@ -5,8 +5,9 @@
 .piece {
   position: absolute;
   left: 50%;
-  top: 45%;
+  top: 50%;
   transform: translate3d(-50%, -50%, 0);
+  font-family: 'Aclonica', sans-serif;
 }
 
 .board-row {
@@ -24,7 +25,12 @@
   border-radius: 50px;
   margin-top: 0;
   padding: 0;
-  height: 95px;
+  height: 70px;
+  width: 70px;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  transition: opacity 0.5s;
 }
 
 .turn-display {
